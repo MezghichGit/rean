@@ -1,52 +1,40 @@
-import { Component} from 'react';
-import { ScrollView ,TextInput, Text, View, Button } from 'react-native';
- 
-export default class App extends Component {
+import React, { useState } from "react";
+import { CheckBox, Text, StyleSheet, View } from "react-native";
 
-  constructor(props){
-    super(props)
+const App = () => {
+  const [isSelected, setSelection] = useState(false);
 
-    this.state = {
-      username: '',
-      password: '',
-    }
-  }
-
-  _handlePress() {
-     console.log(this.state.username);
-     console.log(this.state.password);
-  }
-
-  render() {
-    return (
-    <ScrollView >
-      <View >
-        <Text>
-          Create Account
-        </Text>
-
-        <Text >
-          Votre nom
-        </Text>
-
-        <TextInput
-          
-          placeholder=""
-          onChangeText={(text) => this.setState({username:text})}
+  return (
+    <View style={styles.container}>
+      <View style={styles.checkboxContainer}>
+        <CheckBox
+          value={isSelected}
+          onValueChange={setSelection}
+          style={styles.checkbox}
         />
-        <Text >
-          Votre password
-        </Text>
+        <Text style={styles.label}>Do you like React Native?</Text>
+      </View>
+      <Text>Is CheckBox selected: {isSelected ? "👍" : "👎"}</Text>
+    </View>
+  );
+};
 
-        <TextInput
-          placeholder=""
-          onChangeText={(text) => this.setState({password:text})}
-        />
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  checkboxContainer: {
+    flexDirection: "row",
+    marginBottom: 20,
+  },
+  checkbox: {
+    alignSelf: "center",
+  },
+  label: {
+    margin: 8,
+  },
+});
 
-        <Button onPress={() => this._handlePress()} color='red' title="Connexion">
-        </Button>
-        </View>
-      </ScrollView>
-    );
-  }
-}
+export default App;
