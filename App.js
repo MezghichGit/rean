@@ -1,44 +1,52 @@
-import React, { useState } from 'react';
-import { View, Text, Button, StyleSheet,Image } from 'react-native';
+import { Component} from 'react';
+import { ScrollView ,TextInput, Text, View, Button } from 'react-native';
+ 
+export default class App extends Component {
 
-const App = () => {
+  constructor(props){
+    super(props)
 
-  const[img, setImg]=useState(' ');
-  
-  const getCat = () => {
-    fetch('https://aws.random.cat/meow').then(
-      (res) => { return res.json() }).then(data => { 
-        console.log(data) ;
-        setImg(data.file);
-      })
+    this.state = {
+      username: '',
+      password: '',
+    }
   }
-   
-  return (
-    <View style={styles.container}>
-    <Text>Cliquer ici pour avoir un chat</Text>
-    <Image source={{uri: img}} style={styles.img}/>
-    <Button
-      onPress={getCat}
-      title="Nouveau Chat"
-      color="#f00"
-      />
-    </View>
-  );
-};
 
-// React Native Styles
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  img: {
-    width: '80%',
-    height:'60%',
-    marginBottom:'5%',
-    marginTop:'5%',
+  _handlePress() {
+     console.log(this.state.username);
+     console.log(this.state.password);
   }
-});
 
-export default App;
+  render() {
+    return (
+    <ScrollView >
+      <View >
+        <Text>
+          Create Account
+        </Text>
+
+        <Text >
+          Votre nom
+        </Text>
+
+        <TextInput
+          
+          placeholder=""
+          onChangeText={(text) => this.setState({username:text})}
+        />
+        <Text >
+          Votre password
+        </Text>
+
+        <TextInput
+          placeholder=""
+          onChangeText={(text) => this.setState({password:text})}
+        />
+
+        <Button onPress={() => this._handlePress()} color='red' title="Connexion">
+        </Button>
+        </View>
+      </ScrollView>
+    );
+  }
+}
