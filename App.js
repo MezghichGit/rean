@@ -1,64 +1,44 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button,ActivityIndicator } from 'react-native';
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import { View, Text, Button, StyleSheet,Image } from 'react-native';
 
-function traitement(){
-  console.log("Récuperattion de Data...");
-}
+const App = () => {
 
-
-
-
-export default function App() {
-
-  const [titleText, setTitleText] = useState("React Native");
-
-  const onPressTitle = () => {
-    setTitleText("Mise à jour du text");
-  };
+  const[img, setImg]=useState(' ');
   
+  const getCat = () => {
+    fetch('https://aws.random.cat/meow').then(
+      (res) => { return res.json() }).then(data => { 
+        console.log(data) ;
+        setImg(data.file);
+      })
+  }
+   
   return (
     <View style={styles.container}>
-      
-      
-          <Text style={styles.textStyle} onPress={onPressTitle}>{titleText}</Text>
-    
-
-      <Button
-        title="Press me"
-        onPress={traitement}
-        color ='blue'
+    <Text>Cliquer ici pour avoir un chat</Text>
+    <Image source={{uri: img}} style={styles.img}/>
+    <Button
+      onPress={getCat}
+      title="Nouveau Chat"
+      color="#f00"
       />
-
-
-      <StatusBar style="auto" />
     </View>
   );
-}
+};
 
+// React Native Styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    //flexDirection:'col',
-    backgroundColor: '#fff',
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center'
   },
-
-  child1: {
-    flex: 0.3,
-    backgroundColor: '#68F74F',
-    alignItems: 'center',
-    justifyContent: 'center',
+  img: {
+    width: '80%',
+    height:'60%',
+    marginBottom:'5%',
+    marginTop:'5%',
   }
-,
-child2: {
-  flex: 0.4,
-  backgroundColor: '#F7F44F',
-  alignItems: 'center',
-  justifyContent: 'center',
-},
-textStyle: {
-  fontSize:20
-}
 });
+
+export default App;
